@@ -1,13 +1,11 @@
 aria2:
     container_name: aria2
-    image: murray-liang/aria2-with-ariang:latest
+    image: quay.io/murray-liang/aria2-with-ariang:latest
     ports:
       - 6800:6800
       - 6880:80
       - 6888:8080
     volumes:
       - /mnt/wd-disk/downloads:/data
-      - /mnt/wd-disk/aria2/:/conf
-    environment:
-      - SECRET=<YOUR_SECRET_CODE>
+      - /mnt/wd-disk/aria2:/conf
     restart: unless-stopped

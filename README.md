@@ -32,7 +32,7 @@ Example of `docker-compose.yml`
 ```yml
 aria2:
     container_name: Aria2
-    image: murray-liang/aria2-with-ariang:latest
+    image: quay.io/murray-liang/aria2-with-ariang:latest
     ports:
       - 6800:6800
       - 6880:80
@@ -40,8 +40,6 @@ aria2:
     volumes:
       - <DOWNLOAD_DIR>:/data
       - <CONFIG_DIR>:/conf
-    environment:
-      - SECRET=<YOUR_SECRET_CODE>
     restart: unless-stopped
 ```
 
@@ -57,5 +55,5 @@ $ sudo docker-compose up -d
 
 ## How to Build
 ```bash
-$ sudo docker build -f Dockerfile -t murray-liang/aria2-with-ariang .
+$ sudo docker build -f Dockerfile -t quay.io/murray-liang/aria2-with-ariang .
 ```
