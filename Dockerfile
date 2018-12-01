@@ -1,6 +1,6 @@
 FROM alpine:edge
 
-MAINTAINER xujinkai <jack777@xujinkai.net>
+LABEL maintainer="Murray <menglei.leung@gmail.com>"
 
 RUN apk update && \
 	apk add --no-cache --update bash && \
@@ -8,10 +8,12 @@ RUN apk update && \
 	mkdir -p /conf-copy && \
 	mkdir -p /data && \
 	apk add --no-cache --update aria2 && \
-	apk add git && \
-	git clone https://github.com/ziahamza/webui-aria2 /aria2-webui && \
-    rm /aria2-webui/.git* -rf && \
-    apk del git && \
+	apk add --no-cache curl unzip && \
+	curl -s https://api.github.com/repos/mayswind/AriaNg/releases/latest \
+		| grep "browser_download_url.*zip" | grep -v -i AllInOne | cut -d'"' -f4 \
+		| xargs wget -O /ariang.zip && \
+	unzip /ariang.zip -d /ariang && \
+	rm /ariang.zip && \
 	apk add --update darkhttpd
 
 ADD files/start.sh /conf-copy/start.sh
