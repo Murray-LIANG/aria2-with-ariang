@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:latest
 
 LABEL maintainer="Murray <menglei.leung@gmail.com>"
 

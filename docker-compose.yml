@@ -1,6 +1,6 @@
 aria2:
     container_name: aria2
-    image: quay.io/murray-liang/aria2-with-ariang:latest
+    image: quay.io/murray_liang/aria2-with-ariang:latest
     ports:
       - 6800:6800
       - 6880:80

@@ -17,7 +17,7 @@ $ sudo docker run -d \
     -v <DOWNLOAD_DIR>:/data \
     -v <CONFIG_DIR>:/conf \
     -e SECRET=<YOUR_SECRET_CODE> \
-    murray-liang/aria2-with-ariang
+    quay.io/murray_liang/aria2-with-ariang
 ```
 
 2. Visit `ArigNG` GUI on `http://<HOST_IP>:6880` and `http://<HOST_IP>:6888` to browse data folder.
@@ -31,8 +31,8 @@ $ sudo docker run -d \
 Example of `docker-compose.yml`
 ```yml
 aria2:
-    container_name: Aria2
-    image: quay.io/murray-liang/aria2-with-ariang:latest
+    container_name: aria2
+    image: quay.io/murray_liang/aria2-with-ariang:latest
     ports:
       - 6800:6800
       - 6880:80
@@ -40,6 +40,8 @@ aria2:
     volumes:
       - <DOWNLOAD_DIR>:/data
       - <CONFIG_DIR>:/conf
+    environment:
+      - SECRET=<YOUR_RPC_SECRET>
     restart: unless-stopped
 ```
 
@@ -55,5 +57,9 @@ $ sudo docker-compose up -d
 
 ## How to Build
 ```bash
-$ sudo docker build -f Dockerfile -t quay.io/murray-liang/aria2-with-ariang .
+$ sudo docker build -f Dockerfile -t quay.io/murray_liang/aria2-with-ariang .
 ```
+
+## Tips
+
+### Set `bt-tracker` to `trackers_best` of [this repo](https://github.com/ngosang/trackerslist)
