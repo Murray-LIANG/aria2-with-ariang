@@ -6,16 +6,24 @@ Forked from [XUJINKAI/aria2-with-webui](https://github.com/XUJINKAI/aria2-with-w
 
 ### Docker
 
-1. **IMPORTANT:** Customize `<DOWNLOAD_DIR>` and `<CONFIG_DIR>` to persist your data and config on your host, and `<YOUR_SECRET_CODE>` as the `rpc-secret` for remote downloading trigger.
+1. **IMPORTANT:** Customize below settings:
+    - `<CONFIG_DIR>` to persist your `aria2` config on the host.
+    - `<DOWNLOADS_DIR>` to persist what you download.
+    - _[Optional]_ `<MOVIES_DIR>` to persist the movies you download. If not set, `<DOWNLOADS_DIR>/movies` will be used.
+    - _[Optional]_ `<TMP_DOWNLOAD>` to store what you download temporarily. The data is moved to `<DOWNLOADS_DIR>` or `<MOVIES_DIR>` when finishes. If not set, path `/tmp_download` inside container will be used.
+    - `<YOUR_SECRET_CODE>` as the `rpc-secret` for remote downloading trigger.
 
 ```bash
 $ sudo docker run -d \
     --name aria2-with-ariang \
+    --user 1000:1000 \
     -p 6800:6800 \
-    -p 6880:80 \
+    -p 6880:6880 \
     -p 6888:8080 \
-    -v <DOWNLOAD_DIR>:/data \
     -v <CONFIG_DIR>:/conf \
+    -v <DOWNLOADS_DIR>:/downloads \
+    -v <MOVIES_DIR>:/downloads/movies \
+    -v <TMP_DOWNLOAD>:/tmp_download \
     -e SECRET=<YOUR_SECRET_CODE> \
     quay.io/murray_liang/aria2-with-ariang
 ```
@@ -26,7 +34,13 @@ $ sudo docker run -d \
 
 1. Prepare the `docker-compose.yml` file.
 
-**IMPORTANT:** Customize `<DOWNLOAD_DIR>` and `<CONFIG_DIR>` to persist your data and config on your host, and `<YOUR_SECRET_CODE>` as the `rpc-secret` for remote downloading trigger.
+**IMPORTANT:** Customize below settings:
+
+- `<CONFIG_DIR>` to persist your `aria2` config on the host.
+- `<DOWNLOADS_DIR>` to persist what you download.
+- _[Optional]_ `<MOVIES_DIR>` to persist the movies you download. If not set, `<DOWNLOADS_DIR>/movies` will be used.
+- _[Optional]_ `<TMP_DOWNLOAD>` to store what you download temporarily. The data is moved to `<DOWNLOADS_DIR>` or `<MOVIES_DIR>` when finishes. If not set, path `/tmp_download` inside container will be used.
+- `<YOUR_SECRET_CODE>` as the `rpc-secret` for remote downloading trigger.
 
 Example of `docker-compose.yml`
 ```yml
@@ -35,11 +49,13 @@ aria2:
     image: quay.io/murray_liang/aria2-with-ariang:latest
     ports:
       - 6800:6800
-      - 6880:80
+      - 6880:6880
       - 6888:8080
     volumes:
-      - <DOWNLOAD_DIR>:/data
       - <CONFIG_DIR>:/conf
+      - <DOWNLOADS_DIR>:/downloads
+      - <MOVIES_DIR>:/downloads/movies
+      - <TMP_DOWNLOAD>:/tmp_download
     environment:
       - SECRET=<YOUR_RPC_SECRET>
     restart: unless-stopped

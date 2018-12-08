@@ -4,9 +4,6 @@ LABEL maintainer="Murray <menglei.leung@gmail.com>"
 
 RUN apk update && \
 	apk add --no-cache --update bash && \
-	mkdir -p /conf && \
-	mkdir -p /conf-copy && \
-	mkdir -p /data && \
 	apk add --no-cache --update aria2 && \
 	apk add --no-cache curl unzip && \
 	curl -s https://api.github.com/repos/mayswind/AriaNg/releases/latest \
@@ -23,10 +20,9 @@ ADD files/on-complete.sh /conf-copy/on-complete.sh
 RUN chmod +x /conf-copy/start.sh
 
 WORKDIR /
-VOLUME ["/data"]
-VOLUME ["/conf"]
+VOLUME ["/conf", "/downloads", "/tmp_download"]
 EXPOSE 6800
-EXPOSE 80
+EXPOSE 6880
 EXPOSE 8080
 
 CMD ["/conf-copy/start.sh"]

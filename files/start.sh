@@ -1,4 +1,5 @@
 #!/bin/sh
+
 if [ ! -f /conf/aria2.conf ]; then
 	cp /conf-copy/aria2.conf /conf/aria2.conf
 	if [ $SECRET ]; then
@@ -12,6 +13,6 @@ fi
 chmod +x /conf/on-complete.sh
 touch /conf/aria2.session
 
-darkhttpd /ariang --port 80 &
-darkhttpd /data --port 8080 &
+darkhttpd /ariang --port 6880 &
+darkhttpd /downloads --port 8080 &
 aria2c --conf-path=/conf/aria2.conf

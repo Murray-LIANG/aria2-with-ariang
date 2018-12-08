@@ -1,11 +1,14 @@
 aria2:
-    container_name: aria2
-    image: quay.io/murray_liang/aria2-with-ariang:latest
-    ports:
-      - 6800:6800
-      - 6880:80
-      - 6888:8080
-    volumes:
-      - /mnt/wd-disk/downloads:/data
-      - /mnt/wd-disk/aria2:/conf
-    restart: unless-stopped
+  container_name: aria2
+  image: quay.io/murray_liang/aria2-with-ariang:latest
+  ports:
+    - 6800:6800
+    - 6880:6880
+    - 6888:8080
+  volumes:
+    - /mnt/wd-disk/aria2:/conf
+    - /mnt/wd-disk/downloads:/downloads
+    - /mnt/wd-disk/movies:/downloads/movies
+    - /mnt/micro-sd/tmp_download:/tmp_download
+  user: 1000:1000
+  restart: unless-stopped
